@@ -272,7 +272,7 @@ ${ph}
         <h1 class="title">Proposal for Management&nbsp;Services</h1>
         <div class="prop-name">Meridian Campus Commercial Owners Association</div>
         <div class="inside">
-          <div class="in-label">Inside this proposal</div>
+          <div class="in-label">Proposal Table of Contents</div>
           <ul>
             <li>About AGM</li>
             <li>Governance &amp; Board Support</li>
@@ -298,7 +298,7 @@ ${ph}
     </div>
 
     <footer class="foot">
-      <span class="contact">206.622.8600 &nbsp;&middot;&nbsp; agmrealestategroup.com &nbsp;&middot;&nbsp; 12330 Northup Way, Bellevue, WA 98005</span>
+      <span class="contact">206.622.8600 &nbsp;&middot;&nbsp; <a href="https://www.agmrealestategroup.com" style="color:inherit;">agmrealestategroup.com</a> &nbsp;&middot;&nbsp; 12330 Northup Way, Bellevue, WA 98005</span>
       <span class="conf">Not for distribution</span>
     </footer>
   </div>
