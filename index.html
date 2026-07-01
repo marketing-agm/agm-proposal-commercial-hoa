@@ -303,7 +303,7 @@ em{font-style:italic;}
 .sf-contact{font-size:12.5px; color:var(--ink-72); font-variant-numeric:tabular-nums;}
 .sf-contact a{color:var(--accent);}
 .sf-contact a:hover{color:var(--accent-hover);}
-.sf-confidential{font-size:11px; letter-spacing:.03em; color:var(--ink-42);}
+.sf-confidential{font-size:11px; font-weight:700; letter-spacing:.03em; color:var(--ink-42);}
 @media(max-width:760px){.site-footer{padding:40px 24px;} .sf-inner{flex-direction:column; align-items:flex-start; gap:22px;} .sf-meta{text-align:left;}}
 
 /* custom slim scrollbar */
@@ -784,11 +784,8 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
     rail.innerHTML =
       '<div class="rail-navy">'+
         '<div class="rail-navy-top">'+
-          iconSVG(p.nav)+
-          '<p class="rail-eyebrow">'+esc(p.eyebrow)+'</p>'+
           '<h1 class="rail-title">'+titleHTML+'</h1>'+
         '</div>'+
-        '<div class="rail-mark"><img src="/assets/agm-logo-white.svg" alt="AGM Real Estate Group" /></div>'+
       '</div>'+
       '<div class="rail-blue">'+
         leadHTML+
