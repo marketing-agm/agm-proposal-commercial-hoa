@@ -92,13 +92,15 @@ em{font-style:italic;}
    TOPBAR — full width
    ============================================================ */
 .topbar{position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 88%, transparent); backdrop-filter:saturate(140%) blur(10px); border-bottom:1px solid var(--line-soft);}
-.topbar-inner{display:flex; align-items:center; gap:22px; min-height:var(--hdr); padding:10px 40px;}
-.nav-links{display:flex; flex:1; align-items:center; gap:14px;}
-.nav-spacer{flex:0 0 36px;}
+.topbar-inner{display:flex; align-items:center; gap:22px; min-height:var(--hdr); padding:10px 24px;}
+.nav-links{display:flex; flex:1; align-items:center; gap:6px;}
+.nav-spacer{flex:0 0 var(--rail-w);}
 .nav-tabs{flex:1; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px;}
-.nav-right{display:flex; align-items:center; gap:8px; flex:0 0 auto;}
-.nav-link{position:relative; font-size:12px; font-weight:500; color:var(--ink-42); padding:8px 14px; border-radius:var(--radius-sm); cursor:pointer; background:none; border:none; font-family:var(--sans); letter-spacing:.01em; transition:color .15s var(--ease); white-space:nowrap;}
-.nav-link::after{content:""; position:absolute; left:14px; right:14px; bottom:1px; height:2px; border-radius:2px; background:var(--accent); transform:scaleX(0); transition:transform .22s var(--ease), background .15s var(--ease);}
+.nav-right{display:flex; align-items:center; gap:16px; flex:0 0 auto;}
+.topbar-prop{font-size:9px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-42); white-space:nowrap;}
+@media(max-width:1400px){.nav-spacer{flex-basis:36px;} .topbar-prop{display:none;}}
+.nav-link{position:relative; font-size:12px; font-weight:500; color:var(--ink-42); padding:8px 11px; border-radius:var(--radius-sm); cursor:pointer; background:none; border:none; font-family:var(--sans); letter-spacing:.01em; transition:color .15s var(--ease); white-space:nowrap;}
+.nav-link::after{content:""; position:absolute; left:11px; right:11px; bottom:1px; height:2px; border-radius:2px; background:var(--accent); transform:scaleX(0); transition:transform .22s var(--ease), background .15s var(--ease);}
 .nav-link:hover{color:var(--ink);}
 .nav-link:hover::after{transform:scaleX(1); background:var(--line-strong);}
 .nav-link.active{color:var(--accent); font-weight:600;}
@@ -411,6 +413,7 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
         <button class="nav-link" data-route="fees">Fees</button>
       </div>
       <div class="nav-right">
+        <span class="topbar-prop">Meridian Campus Commercial Owners Association</span>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle light / dark">◐</button>
       </div>
     </nav>
