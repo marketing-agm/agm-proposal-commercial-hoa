@@ -276,7 +276,6 @@ ${ph}
           <ul>
             <li>About AGM</li>
             <li>Governance &amp; Board Support</li>
-            <li>Protecting the Association</li>
             <li>Financial Management</li>
             <li>Facilities &amp; Capital Projects</li>
             <li>Tools, Technology &amp; Fees</li>
