@@ -299,7 +299,7 @@ ${ph}
 
     <footer class="foot">
       <span class="contact">206.622.8600 &nbsp;&middot;&nbsp; <a href="https://www.agmrealestategroup.com" style="color:inherit;">agmrealestategroup.com</a> &nbsp;&middot;&nbsp; 12330 Northup Way, Bellevue, WA 98005</span>
-      <span class="conf">Not for distribution</span>
+      <span class="conf">Confidential</span>
     </footer>
   </div>
   <script>
