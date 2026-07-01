@@ -29,11 +29,41 @@ Open `index.html` in a browser. That's it. Deep-link a section with the URL hash
 2. Settings: Framework preset **None** · Build command **(empty)** · Build output directory **/**
 3. Every push to `main` auto-deploys production; every branch/PR gets its own preview URL.
 
-## REQUIRED before sharing any URL: Cloudflare Access
-Zero Trust → Access → Applications → **Add self-hosted application**:
-- Application domain: `<project>.pages.dev` **and** `*.<project>.pages.dev` (preview deployments are
-  otherwise public).
-- Policy: Allow → Emails → leadership / Board list. One-time PIN works without SSO setup.
+## Access gate — custom password screen (Pages Functions)
+The site is protected by a **custom-designed cover / login screen** (navy AGM cover with an
+**Access** button → password prompt), served by a Cloudflare Pages Function
+(`functions/_middleware.js`). This runs **server-side**: until the correct password is submitted, the
+visitor only ever receives the cover page — the actual proposal (`index.html`) is never sent to the
+browser. The password lives only as an encrypted Cloudflare secret, never in the code or the client.
+
+This replaces the standard Zero Trust login screen with AGM's own branded page.
+
+### One-time setup (required before the site will unlock)
+Cloudflare dashboard → **Workers & Pages → this project → Settings → Variables and Secrets**. Add
+both of these for **Production _and_ Preview**, then redeploy:
+
+| Name | Value | Mark as |
+|------|-------|---------|
+| `SITE_PASSWORD` | the shared password you give recipients | **Secret** |
+| `GATE_SECRET` | any long random string (40+ chars) — used to sign the session cookie | **Secret** |
+
+- Until `SITE_PASSWORD` is set, the site fails closed (shows a "not configured yet" notice).
+- **Change the password** anytime by editing `SITE_PASSWORD` (existing links keep working; open
+  sessions stay valid because `GATE_SECRET` is unchanged).
+- **Force everyone to re-enter** by rotating `GATE_SECRET` (or bumping `TOKEN_VERSION` in the
+  middleware).
+- Sessions last 7 days (`MAX_AGE`); `/__logout` clears the cookie.
+- The property/association name on the cover is the `PROPERTY_NAME` constant at the top of
+  `functions/_middleware.js`.
+
+### Local preview
+Copy `.dev.vars.example` → `.dev.vars` (git-ignored), fill in the two values, and run
+`npx wrangler pages dev .`.
+
+### Note on Zero Trust
+This shared-password gate is intentionally simple and needs no per-user setup. If you ever need
+**per-person access with an audit trail** (who opened it, when), use Cloudflare Zero Trust Access
+instead — but that uses Cloudflare's own login flow, not this custom screen. Don't enable both at once.
 
 ## Analytics (PostHog)
 The site is fully instrumented for PostHog. To turn it on, edit the marked block near the top of
