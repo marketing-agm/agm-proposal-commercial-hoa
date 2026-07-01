@@ -120,7 +120,7 @@ em{font-style:italic;}
 .rail-icon{display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.05); color:var(--accent-2); margin-bottom:28px;}
 .rail-icon svg{width:25px; height:25px;}
 .rail-eyebrow{font-size:11px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--accent-2); margin:0 0 24px;}
-.rail-title{font-family:var(--serif); font-weight:600; font-size:46px; line-height:1.06; letter-spacing:-.01em; color:var(--on-navy); margin:0;}
+.rail-title{font-family:var(--serif); font-weight:600; font-size:34px; line-height:1.12; letter-spacing:-.01em; color:var(--on-navy); margin:0;}
 .rail-title .hl{color:var(--accent-2); display:block;}
 /* AGM logomark anchored at the foot of the navy block */
 .rail-mark{position:relative; z-index:1; margin-top:auto; padding-top:44px; display:flex; align-items:center; gap:13px;}
@@ -131,7 +131,7 @@ em{font-style:italic;}
 .rail-blue{background:var(--accent-2); color:#fff; padding:50px 56px 34px; position:relative; overflow:hidden; display:flex; flex-direction:column; min-height:42%;}
 .rail-blue::after{content:""; position:absolute; right:-60px; top:-60px; width:240px; height:240px; border:1px solid rgba(255,255,255,0.14); border-radius:50%; pointer-events:none;}
 .rail-blue::before{content:""; position:absolute; right:-120px; bottom:-120px; width:300px; height:300px; border:1px solid rgba(255,255,255,0.10); border-radius:50%; pointer-events:none;}
-.rail-lead{position:relative; z-index:1; font-size:15px; line-height:1.7; color:rgba(255,255,255,0.92); margin:0;}
+.rail-lead{position:relative; z-index:1; font-size:13px; line-height:1.6; color:rgba(255,255,255,0.92); margin:0;}
 .rail-foot{position:relative; z-index:1; margin-top:auto; padding-top:34px;}
 .rail-label{font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,0.82);}
 /* section ticker */
@@ -153,18 +153,18 @@ em{font-style:italic;}
 @media(prefers-reduced-motion:reduce){.page.active{animation:none;}}
 
 /* page intro / leads */
-.lead{font-size:16.5px; line-height:1.8; color:var(--ink-80); max-width:none; margin:0 0 44px;}
+.lead{font-size:14.5px; line-height:1.72; color:var(--ink-80); max-width:none; margin:0 0 34px;}
 .lead.with-statute{margin-bottom:20px;}
 /* tabular figures for all numeric content */
 .m-value, .fc-amount, .fc-amt, .fee-card .fc-amount, .rail-num{font-variant-numeric:tabular-nums;}
 .eyebrow{font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.16em; color:var(--accent); margin:0 0 14px;}
 
 /* statute / regulatory note */
-.statute-note{font-size:13px; line-height:1.72; color:var(--ink-72); margin:0 0 40px; padding:16px 22px; border-left:3px solid var(--accent); background:var(--surface-2); border-radius:0 var(--radius) var(--radius) 0;}
+.statute-note{font-size:12px; line-height:1.7; color:var(--ink-72); margin:0 0 34px; padding:15px 20px; border-left:3px solid var(--accent); background:var(--surface-2); border-radius:0 var(--radius) var(--radius) 0;}
 
 /* section header — serif italic + pipe + kicker */
 .sec-head{display:flex; align-items:baseline; gap:16px; padding-bottom:14px; border-bottom:1px solid var(--line-strong); margin:0 0 30px;}
-.sec-head h3{font-family:var(--serif); font-style:italic; font-weight:600; font-size:26px; letter-spacing:-.01em; color:var(--ink); white-space:nowrap;}
+.sec-head h3{font-family:var(--serif); font-style:italic; font-weight:600; font-size:21px; letter-spacing:-.01em; color:var(--ink); white-space:nowrap;}
 .sec-head .pipe{color:var(--accent); font-size:20px; font-weight:300;}
 .sec-head .kick{font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-65); white-space:nowrap;}
 @media(max-width:560px){.sec-head{flex-wrap:wrap; gap:8px;} .sec-head h3,.sec-head .kick{white-space:normal;}}
@@ -189,21 +189,21 @@ em{font-style:italic;}
 .cell:hover{background:var(--surface-2);}
 .cell:hover::before{transform:scaleY(1);}
 .kicker{font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:16px; padding-right:30px;}
-.cell-title{font-family:var(--sans); font-size:18px; font-weight:600; color:var(--ink); margin-bottom:18px; line-height:1.3; letter-spacing:-.01em;}
-.cell-desc{font-size:14px; line-height:1.85; color:var(--ink-72);}
+.cell-title{font-family:var(--sans); font-size:15.5px; font-weight:600; color:var(--ink); margin-bottom:16px; line-height:1.32; letter-spacing:-.01em;}
+.cell-desc{font-size:13px; line-height:1.7; color:var(--ink-72);}
 .cell-desc em{color:var(--ink-65);}
 .sub-note{font-size:12.5px; line-height:1.7; color:var(--ink-65); margin-top:28px; padding-top:20px; border-top:1px solid var(--line-soft); font-style:italic;}
 .sub-note strong{font-weight:600; color:var(--ink-80); font-style:normal;}
 
 /* role cells (Management) */
-.role-title{font-family:var(--sans); font-size:19px; font-weight:600; color:var(--ink); margin-bottom:16px; line-height:1.3; letter-spacing:-.01em; padding-right:42px;}
+.role-title{font-family:var(--sans); font-size:16px; font-weight:600; color:var(--ink); margin-bottom:14px; line-height:1.32; letter-spacing:-.01em; padding-right:42px;}
 .role-title em{font-weight:400; font-size:12px; color:var(--ink-55); letter-spacing:0;}
 
 /* featured role (primary point of contact) */
 .feature-role{position:relative; border:1px solid var(--line-strong); border-left:3px solid var(--accent); border-radius:var(--radius); background:var(--surface-2); padding:42px 46px; box-shadow:var(--card-shadow);}
 .feature-role .kicker{margin-bottom:14px;}
-.feature-role .role-title{font-size:25px; padding-right:0; margin-bottom:14px;}
-.feature-role .cell-desc{font-size:15.5px; line-height:1.8; max-width:680px;}
+.feature-role .role-title{font-size:20px; padding-right:0; margin-bottom:12px;}
+.feature-role .cell-desc{font-size:14px; line-height:1.7; max-width:680px;}
 @media(max-width:560px){.feature-role{padding:30px 26px;}}
 
 /* pills */
@@ -214,7 +214,7 @@ em{font-style:italic;}
 /* highlight row (full width callout) */
 .highlight{display:grid; grid-template-columns:230px 1fr; gap:36px; align-items:baseline; margin-top:36px; padding:38px 40px; background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:var(--radius);}
 .highlight .h-label{font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent);}
-.highlight .h-value{font-size:15.5px; font-weight:500; color:var(--ink); line-height:1.55;}
+.highlight .h-value{font-size:14px; font-weight:500; color:var(--ink); line-height:1.55;}
 @media(max-width:680px){.highlight{grid-template-columns:1fr; gap:12px;}}
 
 /* ============================================================
@@ -225,7 +225,7 @@ em{font-style:italic;}
 .metric:last-child{border-right:none;}
 .metric:hover{background:var(--surface-2);}
 .metric .m-label{font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);}
-.metric .m-value{font-family:var(--serif); font-weight:600; font-size:34px; color:var(--ink); line-height:1; letter-spacing:-.01em;}
+.metric .m-value{font-family:var(--serif); font-weight:600; font-size:29px; color:var(--ink); line-height:1; letter-spacing:-.01em;}
 .metric .m-unit{font-size:12.5px; color:var(--ink-65); font-family:var(--sans); line-height:1.5;}
 @media(max-width:820px){.metrics{grid-template-columns:repeat(2,1fr);} .metric:nth-child(2){border-right:none;}}
 @media(max-width:460px){.metrics{grid-template-columns:1fr;} .metric{border-right:none;}}
@@ -258,7 +258,7 @@ em{font-style:italic;}
 /* footprint */
 .footprint{display:grid; grid-template-columns:230px 1fr; gap:30px; padding-top:26px; margin-top:34px; border-top:1px solid var(--line-strong);}
 .footprint .fp-label{font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent);}
-.footprint .fp-text{font-size:14.5px; line-height:1.7; color:var(--ink-80);}
+.footprint .fp-text{font-size:13px; line-height:1.7; color:var(--ink-80);}
 .footprint .fp-text strong{font-weight:600; color:var(--ink);}
 @media(max-width:680px){.footprint{grid-template-columns:1fr; gap:12px;}}
 
@@ -269,11 +269,11 @@ em{font-style:italic;}
 .fee-card{display:grid; grid-template-columns:1fr auto; gap:48px; align-items:start; padding:52px 40px; border-bottom:1px solid var(--line); transition:background .16s var(--ease);}
 .fee-card:hover{background:var(--surface-2);}
 .fee-card .fc-label{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-bottom:16px;}
-.fee-card .fc-title{font-family:var(--sans); font-size:23px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:16px; letter-spacing:-.01em;}
-.fee-card .fc-desc{font-size:14px; line-height:1.72; color:var(--ink-72); max-width:540px;}
+.fee-card .fc-title{font-family:var(--sans); font-size:19px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:14px; letter-spacing:-.01em;}
+.fee-card .fc-desc{font-size:13px; line-height:1.7; color:var(--ink-72); max-width:540px;}
 .fee-card .fc-foot{font-style:italic; font-size:12px; color:var(--ink-55); margin-top:18px;}
 .fee-card .fc-price{text-align:right; padding-top:4px; white-space:nowrap;}
-.fee-card .fc-amount{font-family:var(--serif); font-size:38px; font-weight:600; color:var(--ink); line-height:1.05; letter-spacing:-.01em;}
+.fee-card .fc-amount{font-family:var(--serif); font-size:31px; font-weight:600; color:var(--ink); line-height:1.05; letter-spacing:-.01em;}
 .fee-card .fc-amount.sm{font-size:21px; line-height:1.35;}
 .fee-card .fc-unit{font-size:12px; color:var(--ink-55); margin-top:12px; letter-spacing:.03em;}
 .fee-card .fc-unit.italic{font-style:italic; margin-top:6px;}
@@ -337,7 +337,7 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
 @media(max-width:1180px){
   :root{--rail-w:392px;}
   .content{padding:54px 48px 76px;}
-  .rail-title{font-size:38px;}
+  .rail-title{font-size:30px;}
   .rail-navy{padding:58px 42px 50px;}
   .rail-blue{padding:42px 42px 28px;}
 }
@@ -359,7 +359,7 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
 @media(max-width:560px){
   .content{padding:40px 20px 60px;}
   .topbar-inner{padding:10px 20px;}
-  .rail-title{font-size:32px;}
+  .rail-title{font-size:27px;}
   .cell{padding:26px 24px 28px;}
 }
 </style>
