@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<!--
+  design-reference.html — a LIVING STYLE GUIDE for the AGM Design System.
+
+  What this is: one page that renders every core component using the design
+  tokens, so you can SEE the system in a browser instead of only reading the
+  rules in agm-design.md. Open it by double-clicking the file — no server needed.
+
+  Where the values come from: the tokens below are the REAL ones from our
+  flagship app, the AGM Corporate Library (src/styles.css). They are not
+  placeholders — they're the values you should actually build with.
+
+  Heads up (a deliberate exception to our usual rule):
+    Our standard is to keep CSS in a separate .css file, not in the HTML. Here I'm
+    putting the styles in a <style> block ON PURPOSE so this is ONE portable file
+    you can email or open anywhere. In a real app, move :root into a shared
+    tokens.css instead. — your senior dev
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGM Design System — Reference</title>
+  <!-- The real brand fonts: Source Serif 4 (display) + DM Sans (body/UI). -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+    /* ----------------------------------------------------------------
+       DESIGN TOKENS — the REAL values from the AGM Corporate Library.
+       Keep these identical to agm-design.md §12 and tokens.css.
+    ----------------------------------------------------------------- */
+    :root {
+      /* Surfaces & backgrounds */
+      --bg:            #ffffff;
+      --bg-secondary:  #fbfbfa;
+      --bg-tertiary:   #f7f6f3;
+      --bg-hover:      #f1f1ef;
+      --bg-active:     #ededeb;
+
+      /* Borders */
+      --border:        #e8e7e4;
+      --border-light:  #eeeeec;
+
+      /* Text */
+      --text-primary:   #1a1a19;
+      --text-secondary: #6b6b6a;
+      --text-tertiary:  #9b9b99;
+
+      /* Accent (interactive blue) */
+      --accent:        #2383e2;
+      --accent-light:  #e8f0fe;
+      --accent-hover:  #1b6ec2;
+
+      /* Primary-button surface — role token so it doesn't invert in dark mode */
+      --btn-primary-bg:       var(--text-primary);
+      --btn-primary-bg-hover: #333;
+
+      /* Danger */
+      --danger:        #cc3333;
+      --danger-light:  #ffeaea;
+
+      /* Fonts */
+      --font-display:  'Source Serif 4', Georgia, serif;
+      --font-body:     'DM Sans', -apple-system, sans-serif;
+
+      /* Shape */
+      --radius-sm:     4px;
+      --radius-md:     6px;
+      --radius-lg:     10px;
+
+      /* Elevation */
+      --shadow-sm:     0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md:     0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg:     0 8px 32px rgba(0,0,0,0.12);
+      --shadow-xl:     0 12px 48px rgba(0,0,0,0.16);
+
+      /* Motion */
+      --transition:    150ms ease;
+    }
+
+    /* ----------------------------------------------------------------
+       Base page styles
+    ----------------------------------------------------------------- */
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-tertiary);
+      line-height: 1.5;
+      font-size: 14px;
+      margin: 0;
+      padding: 32px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 1000px; margin: 0 auto; }
+
+    h1 { font-family: var(--font-display); font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+    h2 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 40px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 { font-family: var(--font-display); font-size: 16px; font-weight: 600; }
+    .muted { color: var(--text-secondary); }
+    .label-micro {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--text-tertiary);
+    }
+    .note {
+      background: var(--accent-light);
+      color: var(--accent-hover);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-size: 13px;
+    }
+
+    /* Generic card used to frame each demo section */
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    /* ----------------------------------------------------------------
+       Color swatches
+    ----------------------------------------------------------------- */
+    .swatches { display: flex; flex-wrap: wrap; gap: 16px; }
+    .swatch { width: 130px; }
+    .swatch .chip {
+      height: 56px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+    .swatch .name { font-size: 13px; margin-top: 4px; }
+    .swatch .hex { font-size: 11px; color: var(--text-tertiary); }
+
+    /* ----------------------------------------------------------------
+       Buttons — base .btn + a variant class (mirrors styles.css)
+    ----------------------------------------------------------------- */
+    .btn {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+    .btn-primary   { background: var(--btn-primary-bg); color: #fff; border-color: var(--btn-primary-bg); }
+    .btn-primary:hover { background: var(--btn-primary-bg-hover); }
+    .btn-secondary { background: var(--bg); color: var(--text-primary); }
+    .btn-secondary:hover { background: var(--bg-tertiary); }
+    .btn-danger    { background: var(--bg); color: var(--danger); }
+    .btn-danger:hover { background: var(--danger-light); border-color: var(--danger); }
+    .btn-accent    { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-accent:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    .btn:disabled  { opacity: 0.4; cursor: not-allowed; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+    /* ----------------------------------------------------------------
+       Form inputs — note the signature accent focus ring
+    ----------------------------------------------------------------- */
+    .field { margin-bottom: 16px; max-width: 360px; }
+    .field label {
+      display: block; font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.03em; color: var(--text-secondary); margin-bottom: 6px;
+    }
+    .field input {
+      width: 100%;
+      padding: 8px 12px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-sizing: border-box;
+      transition: all var(--transition);
+    }
+    .field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+    .field input.error { border-color: var(--danger); }
+    .field .help  { font-size: 12px; color: var(--text-tertiary); margin-top: 6px; }
+    .field .error-msg { font-size: 12px; color: var(--danger); margin-top: 6px; }
+
+    /* ----------------------------------------------------------------
+       Table — financial data styling
+    ----------------------------------------------------------------- */
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      background: var(--bg-tertiary);
+      text-align: left;
+      padding: 8px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-tertiary);
+    }
+    tbody td { padding: 10px 16px; border-top: 1px solid var(--border-light); font-size: 13px; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; } /* right-aligned, aligned decimals */
+    .neg { color: var(--danger); } /* negative money */
+    tfoot td { padding: 10px 16px; border-top: 2px solid var(--text-primary); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+    /* ----------------------------------------------------------------
+       Status chips — color + a DOT + a word (never color alone)
+    ----------------------------------------------------------------- */
+    .chip-status {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 2px 8px; border-radius: 999px;
+      font-size: 11px; font-weight: 500;
+    }
+    .chip-status .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .chip-success { background: #e3f5e6; color: #1a7a3a; }
+    .chip-warning { background: #fdf3da; color: #8b6a00; }
+    .chip-danger  { background: #fceae8; color: #b3261e; }
+    .chip-info    { background: #e6efff; color: #1858b8; }
+    .chip-review  { background: #efe6ff; color: #5b3aa6; }
+    .chip-neutral { background: #f1f1ef; color: #555; }
+
+    /* ----------------------------------------------------------------
+       Alerts — inline, tied to a spot on screen
+    ----------------------------------------------------------------- */
+    .alert {
+      display: flex; gap: 8px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .alert-success { background: #e3f5e6; color: #1a7a3a; }
+    .alert-warning { background: #fdf3da; color: #8b6a00; }
+    .alert-danger  { background: #fceae8; color: #b3261e; }
+    .alert-info    { background: var(--accent-light); color: var(--accent-hover); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>AGM Design System — Reference</h1>
+    <p class="muted" style="font-size:13px">A living preview of every core component, rendered with the
+      <strong>real tokens</strong> from the AGM Corporate Library (<code>src/styles.css</code>).
+      Rules and explanations live in <code>agm-design.md</code>.</p>
+
+    <!-- COLORS -->
+    <h2>Colors</h2>
+    <section class="card">
+      <p class="label-micro" style="margin-bottom:10px">Core</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:var(--text-primary)"></div><div class="name">Text / Primary</div><div class="hex">#1a1a19</div></div>
+        <div class="swatch"><div class="chip" style="background:var(--text-secondary)"></div><div class="name">Text secondary</div><div class="hex">#6b6b6a</div></div>
+        <div class="swatch"><div class="chip" style="background:var(--text-tertiary)"></div><div class="name">Text tertiary</div><div class="hex">#9b9b99</div></div>
+        <div class="swatch"><div class="chip" style="background:var(--accent)"></div><div class="name">Accent</div><div class="hex">#2383e2</div></div>
+        <div class="swatch"><div class="chip" style="background:var(--danger)"></div><div class="name">Danger</div><div class="hex">#cc3333</div></div>
+        <div class="swatch"><div class="chip" style="background:var(--bg-tertiary)"></div><div class="name">Surface tint</div><div class="hex">#f7f6f3</div></div>
+        <div class="swatch"><div class="chip" style="background:var(--border)"></div><div class="name">Border</div><div class="hex">#e8e7e4</div></div>
+      </div>
+      <p class="label-micro" style="margin:20px 0 10px">Status</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#e3f5e6"></div><div class="name">Success</div><div class="hex">#e3f5e6 / #1a7a3a</div></div>
+        <div class="swatch"><div class="chip" style="background:#fdf3da"></div><div class="name">Warning</div><div class="hex">#fdf3da / #8b6a00</div></div>
+        <div class="swatch"><div class="chip" style="background:#fceae8"></div><div class="name">Danger</div><div class="hex">#fceae8 / #b3261e</div></div>
+        <div class="swatch"><div class="chip" style="background:#e6efff"></div><div class="name">Info</div><div class="hex">#e6efff / #1858b8</div></div>
+        <div class="swatch"><div class="chip" style="background:#efe6ff"></div><div class="name">Review</div><div class="hex">#efe6ff / #5b3aa6</div></div>
+      </div>
+    </section>
+
+    <!-- TYPOGRAPHY -->
+    <h2>Typography</h2>
+    <section class="card">
+      <h1>H1 — Page title (Source Serif 4, 28px)</h1>
+      <h2 style="margin-top:16px;border:none;padding:0">H2 — Section header (serif, 18px)</h2>
+      <h3>H3 — Card title (serif, 16px)</h3>
+      <p style="font-size:14px">Body text — DM Sans at the app's 14px base, line height 1.5. Headings are
+         serif, UI/body is sans; that contrast is the brand. (Bump body to 16px on owner/tenant pages.)</p>
+      <p class="muted" style="font-size:12px">Small / muted text — captions, labels, footnotes.</p>
+    </section>
+
+    <!-- BUTTONS -->
+    <h2>Buttons</h2>
+    <section class="card">
+      <div class="btn-row">
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-accent">Focus for AI</button>
+        <button class="btn btn-primary" disabled>Disabled</button>
+      </div>
+      <p class="muted" style="font-size:12px;margin-bottom:0">Primary is near-black, not blue — blue is reserved
+         for links, focus, and AI affordances. Tab to a button to see the accent focus ring.</p>
+    </section>
+
+    <!-- FORM -->
+    <h2>Form Inputs</h2>
+    <section class="card">
+      <div class="field">
+        <label for="prop">Property name</label>
+        <input id="prop" type="text" placeholder="Maple Court Apartments">
+        <div class="help">Enter the property as it appears in AppFolio.</div>
+      </div>
+      <div class="field">
+        <label for="date">Report month *</label>
+        <input id="date" class="error" type="text" value="13/2026">
+        <div class="error-msg">Enter a valid month, e.g. 05/2026.</div>
+      </div>
+      <p class="muted" style="font-size:12px;margin-bottom:0">Click into a field to see the signature focus ring:
+         <code>border-color: var(--accent)</code> + <code>box-shadow: 0 0 0 3px var(--accent-light)</code>.</p>
+    </section>
+
+    <!-- TABLE -->
+    <h2>Table (financial)</h2>
+    <section class="card">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Status</th><th class="num">Rent Charged</th><th class="num">Net</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Maple Court</td><td><span class="chip-status chip-success"><span class="dot"></span>Paid</span></td><td class="num">$12,400.00</td><td class="num">$3,210.00</td></tr>
+          <tr><td>Oak Street</td><td><span class="chip-status chip-warning"><span class="dot"></span>Due soon</span></td><td class="num">$8,950.00</td><td class="num">$1,075.00</td></tr>
+          <tr><td>River Plaza</td><td><span class="chip-status chip-danger"><span class="dot"></span>Overdue</span></td><td class="num">$15,200.00</td><td class="num neg">($420.00)</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td>Total</td><td></td><td class="num">$36,550.00</td><td class="num">$3,865.00</td></tr>
+        </tfoot>
+      </table>
+      <p class="muted" style="font-size:12px;margin-bottom:0">Header in <code>--bg-tertiary</code>; numbers right-aligned
+         with <code>tabular-nums</code> so decimals line up; negatives in parentheses and red; totals row bold with a heavy top border.</p>
+    </section>
+
+    <!-- ALERTS & STATUS CHIPS -->
+    <h2>Alerts &amp; Status Chips</h2>
+    <section class="card">
+      <div class="alert alert-success">✓ Report generated successfully.</div>
+      <div class="alert alert-warning">⚠ 3 properties are missing data for this period.</div>
+      <div class="alert alert-danger">✕ Upload failed — the CSV is missing a "Property" column.</div>
+      <div class="alert alert-info">ℹ Data last synced 2 hours ago.</div>
+      <p style="margin:14px 0 0;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="chip-status chip-success"><span class="dot"></span>Approved</span>
+        <span class="chip-status chip-warning"><span class="dot"></span>Draft</span>
+        <span class="chip-status chip-info"><span class="dot"></span>In progress</span>
+        <span class="chip-status chip-review"><span class="dot"></span>In review</span>
+        <span class="chip-status chip-danger"><span class="dot"></span>Rejected</span>
+        <span class="chip-status chip-neutral"><span class="dot"></span>New</span>
+      </p>
+      <p class="muted" style="font-size:12px;margin:10px 0 0">Each chip pairs the color with a <strong>dot + a word</strong>
+         so status is never conveyed by color alone (accessibility).</p>
+    </section>
+
+    <p class="note">Reminder: this page is for previewing the system. The authoritative rules, the reasons behind
+       them, and the full token reference live in <code>agm-design.md</code>. Keep the two in sync.</p>
+  </main>
+</body>
+</html>
