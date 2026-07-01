@@ -70,6 +70,58 @@ function htmlHeaders(extra) {
   }, extra || {});
 }
 
+/* ── PostHog analytics ─────────────────────────────────────────────────────
+ * Configured once via Cloudflare env vars (no key committed to the repo):
+ *   POSTHOG_KEY   = your Project API Key (starts with "phc_")   [required to turn on]
+ *   POSTHOG_HOST  = https://us.i.posthog.com  (US, default) or  https://eu.i.posthog.com
+ * When POSTHOG_KEY is set, tracking is injected into BOTH the cover/login page
+ * (below) and the proposal (index.html, by filling in its inline placeholder).
+ * Off entirely when POSTHOG_KEY is absent. Inputs are masked in replays.
+ * ------------------------------------------------------------------------- */
+const POSTHOG_PLACEHOLDER = "phc_REPLACE_WITH_YOUR_PROJECT_API_KEY";
+function posthogHost(env) { return env.POSTHOG_HOST || "https://us.i.posthog.com"; }
+
+/* Standard PostHog loader + init, used on the cover page. `surface` tags events
+ * so you can tell gate visits apart from in-proposal activity. */
+function posthogSnippet(key, host, surface) {
+  if (!key) return "";
+  const k = String(key).replace(/[<'\\]/g, "");
+  const h = String(host).replace(/[<'\\]/g, "");
+  const s = String(surface).replace(/[<'\\]/g, "");
+  return `<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('${k}', {
+    api_host: '${h}',
+    person_profiles: 'always',
+    autocapture: true,
+    capture_pageview: true,
+    capture_pageleave: true,
+    enable_heatmaps: true,
+    disable_session_recording: false,
+    session_recording: { maskAllInputs: true }
+  });
+  posthog.register({ proposal: 'commercial-hoa-microsite', surface: '${s}' });
+  posthog.capture('gate_viewed');
+</script>`;
+}
+
+/* Activate the proposal's own inline PostHog by filling in the env key/host as
+ * the static index.html streams through the gate. Untouched when no key. */
+async function withProposalAnalytics(res, env) {
+  if (!env.POSTHOG_KEY) return res;
+  const ct = res.headers.get("content-type") || "";
+  if (!ct.includes("text/html")) return res;
+  let body = await res.text();
+  body = body.split(POSTHOG_PLACEHOLDER).join(String(env.POSTHOG_KEY));
+  if (env.POSTHOG_HOST) {
+    body = body.split("window.AGM_POSTHOG_HOST = 'https://us.i.posthog.com';")
+               .join("window.AGM_POSTHOG_HOST = '" + String(env.POSTHOG_HOST) + "';");
+  }
+  const headers = new Headers(res.headers);
+  headers.delete("content-length");                 // body length changed
+  return new Response(body, { status: res.status, statusText: res.statusText, headers });
+}
+
 export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
@@ -77,7 +129,10 @@ export async function onRequest(context) {
   // Fail closed if the operator hasn't configured a password yet.
   if (!env.SITE_PASSWORD) {
     return new Response(
-      coverHTML({ error: "Access is not configured yet. Set the SITE_PASSWORD secret in the Cloudflare Pages project settings, then redeploy." }),
+      coverHTML({
+        error: "Access is not configured yet. Set the SITE_PASSWORD secret in the Cloudflare Pages project settings, then redeploy.",
+        analytics: posthogSnippet(env.POSTHOG_KEY, posthogHost(env), "gate")
+      }),
       { status: 503, headers: htmlHeaders() }
     );
   }
@@ -105,30 +160,36 @@ export async function onRequest(context) {
     return Response.redirect(url.origin + "/?e=denied", 303);
   }
 
-  // Authenticated? Serve the requested asset (the real site).
+  // Authenticated? Serve the requested asset (the real site), with analytics
+  // switched on if a PostHog key is configured.
   const token = readCookie(request.headers.get("Cookie"), COOKIE);
   if (token && safeEqual(token, await expectedToken(env))) {
-    return next();
+    return withProposalAnalytics(await next(), env);
   }
 
   // Otherwise, show the cover/login screen for any path.
   const denied = url.searchParams.get("e") === "denied";
   return new Response(
-    coverHTML({ error: denied ? "Incorrect password. Please try again." : "" }),
+    coverHTML({
+      error: denied ? "Incorrect password. Please try again." : "",
+      analytics: posthogSnippet(env.POSTHOG_KEY, posthogHost(env), "gate")
+    }),
     { status: denied ? 401 : 200, headers: htmlHeaders() }
   );
 }
 
 
 /* ── the custom cover / login screen (institutional split layout) ────────── */
-function coverHTML({ error }) {
+function coverHTML({ error, analytics }) {
   const err = (error || "").replace(/</g, "&lt;");
+  const ph = analytics || "";
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
+${ph}
 <title>AGM Real Estate Group &mdash; Proposal Access</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%233A8DDE' d='M4 27 16 5l12 22h-5l-7-13-7 13z'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />

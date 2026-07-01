@@ -67,23 +67,35 @@ This shared-password gate is intentionally simple and needs no per-user setup. I
 instead — but that uses Cloudflare's own login flow, not this custom screen. Don't enable both at once.
 
 ## Analytics (PostHog)
-The site is fully instrumented for PostHog. To turn it on, edit the marked block near the top of
-`index.html` (`<head>`) and paste your **Project API Key** (PostHog → Settings → Project → *Project
-API Key*, starts with `phc_`), plus set the region host (`us.i.posthog.com` or `eu.i.posthog.com`).
-Until a real key is present, analytics stays off — no requests, no errors.
+The site is fully instrumented for PostHog across **both** the login/cover page and the proposal.
+Turn it on by setting these as **environment variables** in the Cloudflare Pages project (Settings →
+Variables and Secrets), for **Production _and_ Preview**, then redeploy:
+
+| Name | Value |
+|------|-------|
+| `POSTHOG_KEY` | your **Project API Key** (PostHog → Settings → Project → *Project API Key*, starts with `phc_`) |
+| `POSTHOG_HOST` | *(optional)* `https://us.i.posthog.com` (US, default) or `https://eu.i.posthog.com` (EU) |
+
+Until `POSTHOG_KEY` is set, analytics stays off — no requests, no errors. The key lives only in
+Cloudflare (nothing committed to the repo): the gate function injects it into the cover page and fills
+in the proposal's inline placeholder as `index.html` is served. (You can still hard-code the key
+directly in `index.html`'s marked `<head>` block instead, but that only covers the proposal, not the
+gate page, and puts the key in the repo — the env var is preferred.)
 
 What it tracks once the key is set:
-- **Visits** — a `$pageview` fires on load (each section is its own virtual pageview, URL carries the
-  `#section` hash).
-- **Tab navigation** — a `tab_click` event with `to`, `from`, and `method` (`nav_tab`, `pager`,
-  `rail_ticker`, `keyboard`, `brand`).
-- **Time on each tab** — a `section_time` event with `section`, `section_label`, and `seconds` when a
-  section is left (plus the open section is flushed on tab-hide / exit via `capture_pageleave`).
-- **Everything else** — `autocapture` (every click/interaction), **session replays**, and click/scroll
-  **heatmaps** are enabled.
+- **Cover / login page** — a `$pageview` on load and a `gate_viewed` event (tagged `surface: gate`),
+  plus autocapture of the Access click. Lets you see who reaches the gate and whether they bounce.
+  The password field is masked in session replays.
+- **Proposal — visits** — a virtual `$pageview` per section (URL carries the `#section` hash).
+- **Proposal — tab navigation** — a `tab_click` event with `to`, `from`, and `method` (`nav_tab`,
+  `pager`, `rail_ticker`, `keyboard`, `brand`).
+- **Proposal — time on each tab** — a `section_time` event with `section`, `section_label`, and
+  `seconds` when a section is left (open section flushed on tab-hide / exit via `capture_pageleave`).
+- **Everything, both pages** — `autocapture` (every click/interaction), **session replays**, and
+  click/scroll **heatmaps** are enabled.
 
-All events are tagged with `proposal: commercial-hoa-microsite` (useful if the same PostHog project
-hosts more than one site).
+All events are tagged with `proposal: commercial-hoa-microsite` (and `surface: gate` on the cover
+page) so you can filter gate traffic from in-proposal activity.
 
 ## Operational notes
 - `_headers` enforces `noindex` and security headers at the edge.
