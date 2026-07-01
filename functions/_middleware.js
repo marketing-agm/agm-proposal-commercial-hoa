@@ -23,9 +23,6 @@
  *   `npx wrangler pages dev .`  — see .dev.vars.example.
  * ========================================================================== */
 
-/* ── EDIT: the property / association name shown on the cover ─────────────── */
-const PROPERTY_NAME = "Northpointe Corporate Center";
-
 const COOKIE = "agm_gate";
 const TOKEN_VERSION = "v1";                 // bump to invalidate every session
 const MAX_AGE = 60 * 60 * 24 * 7;           // session length: 7 days
@@ -122,7 +119,8 @@ export async function onRequest(context) {
   );
 }
 
-/* ── the custom cover / login screen ─────────────────────────────────────── */
+
+/* ── the custom cover / login screen (institutional split layout) ────────── */
 function coverHTML({ error }) {
   const err = (error || "").replace(/</g, "&lt;");
   return `<!doctype html>
@@ -131,88 +129,126 @@ function coverHTML({ error }) {
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
-<title>AGM Real Estate Group — Access</title>
+<title>AGM Real Estate Group &mdash; Proposal Access</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%233A8DDE' d='M4 27 16 5l12 22h-5l-7-13-7 13z'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --navy:#0C2233; --navy-2:#0A2540; --blue:#5B9BE0; --blue-soft:#7FB2EA;
-    --lavender:#B7B3E6; --page:#ECEAF6;
+    --ink:#0A2540; --ink-70:rgba(10,37,64,0.70); --ink-55:rgba(10,37,64,0.55);
+    --ink-40:rgba(10,37,64,0.40); --line:#E6EAEF; --line-strong:#D6DCE4;
+    --accent:#3A8DDE; --bg:#FAFBFC; --sheet:#FFFFFF;
     --serif:'Playfair Display', Georgia, 'Times New Roman', serif;
     --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   *{box-sizing:border-box;}
   html,body{height:100%;}
-  body{margin:0; background:var(--page); font-family:var(--sans); color:#fff; -webkit-font-smoothing:antialiased; padding:14px;}
-  .frame{
-    position:relative; overflow:hidden; min-height:calc(100vh - 28px);
-    background:linear-gradient(150deg,#0E2637 0%, #0A1E2D 60%, #081824 100%);
-    border:1px solid var(--lavender); border-radius:3px;
-    display:flex; flex-direction:column; padding:clamp(28px,4vw,56px) clamp(24px,5vw,72px);
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:14px; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; padding:clamp(16px,2.4vw,34px);}
+  .sheet{background:var(--sheet); border:1px solid var(--line-strong); border-radius:2px; min-height:calc(100vh - clamp(32px,4.8vw,68px)); display:grid; grid-template-rows:auto 1fr auto; box-shadow:0 1px 2px rgba(10,37,64,.03), 0 18px 50px rgba(10,37,64,.05);}
+  .head{display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,2.3vw,30px) clamp(26px,3.6vw,56px); border-bottom:1px solid var(--line);}
+  .head .eyebrow{font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-55);}
+  .logo{display:flex; align-items:center; gap:12px;}
+  .logo svg{display:block; color:var(--accent); flex:0 0 auto;}
+  .logo .lk{display:flex; flex-direction:column; gap:3px; line-height:1;}
+  .logo .lk-word{font-family:var(--serif); font-weight:700; font-size:16px; letter-spacing:.05em; color:var(--ink);}
+  .logo .lk-sub{font-size:8.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-40);}
+  .body{display:grid; grid-template-columns:1.32fr 1fr; min-height:0;}
+  .col{padding:clamp(40px,5vw,84px) clamp(28px,4vw,64px);}
+  .col.left{display:flex; flex-direction:column; justify-content:center;}
+  .col.right{border-left:1px solid var(--line); display:flex; flex-direction:column; justify-content:center; background:linear-gradient(180deg, rgba(58,141,222,0.018), transparent 40%);}
+  .kicker{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin:0 0 22px;}
+  .title{font-family:var(--serif); font-weight:600; font-size:clamp(30px,3.7vw,50px); line-height:1.1; letter-spacing:-.01em; color:var(--ink); margin:0 0 26px;}
+  .lead{font-size:15.5px; line-height:1.72; color:var(--ink-70); margin:0; max-width:38ch;}
+  .inside{margin-top:40px; padding-top:26px; border-top:1px solid var(--line);}
+  .inside .in-label{font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-40); margin-bottom:16px;}
+  .inside ul{margin:0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:11px 30px;}
+  .inside li{font-size:13px; color:var(--ink-70); display:flex; align-items:baseline; gap:10px; line-height:1.35;}
+  .inside li::before{content:""; flex:0 0 auto; width:5px; height:5px; border-radius:50%; background:var(--accent); transform:translateY(-1px);}
+  .login{max-width:340px; width:100%;}
+  .login .l-kicker{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;}
+  .login h2{font-family:var(--serif); font-weight:600; font-size:24px; line-height:1.2; color:var(--ink); margin:0 0 14px;}
+  .login p.help{font-size:13.5px; line-height:1.65; color:var(--ink-55); margin:0 0 28px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-55); margin-bottom:9px;}
+  .field input{width:100%; font-family:var(--sans); font-size:14.5px; color:var(--ink); background:#fff; border:1px solid var(--line-strong); border-radius:6px; padding:14px 16px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;}
+  .field input::placeholder{color:var(--ink-40);}
+  .field input:focus{border-color:var(--accent); box-shadow:0 0 0 3px rgba(58,141,222,0.12);}
+  .btn{width:100%; font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--ink); border:1px solid var(--ink); border-radius:6px; padding:15px 20px; cursor:pointer; transition:background .16s ease, transform .12s ease;}
+  .btn:hover{background:#0d2f52; transform:translateY(-1px);}
+  .btn:active{transform:translateY(0);}
+  .err{min-height:18px; margin-top:12px; font-size:12.5px; color:#C0392B; font-weight:500;}
+  .login .assist{margin-top:26px; padding-top:20px; border-top:1px solid var(--line); font-size:12px; line-height:1.6; color:var(--ink-40);}
+  .login .assist a{color:var(--ink-55); text-decoration:none;}
+  .login .assist a:hover{color:var(--accent);}
+  .foot{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; padding:clamp(16px,1.8vw,24px) clamp(26px,3.6vw,56px); border-top:1px solid var(--line);}
+  .foot .contact{font-size:12px; color:var(--ink-55); font-variant-numeric:tabular-nums;}
+  .foot .conf{font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-40);}
+  @media(max-width:860px){
+    .body{grid-template-columns:1fr;}
+    .col.right{border-left:none; border-top:1px solid var(--line); background:none;}
+    .col{padding:clamp(34px,7vw,56px) clamp(26px,7vw,48px);}
+    .login{max-width:none;}
   }
-  .watermark{
-    position:absolute; top:0; bottom:0; left:clamp(-14px,-0.5vw,4px);
-    font-family:var(--serif); font-weight:700; font-size:min(24vh,236px); line-height:.86; letter-spacing:-.02em;
-    color:var(--blue); opacity:.88; display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
-    pointer-events:none; user-select:none; z-index:0;
+  @media(max-width:520px){
+    .logo .lk{display:none;}
+    .foot{flex-direction:column; align-items:flex-start; gap:8px;}
   }
-  .watermark span{display:block;}
-  .frame > *:not(.watermark){position:relative; z-index:1;}
-  .topline{text-align:center; font-family:var(--serif); font-weight:600; font-size:clamp(15px,1.6vw,20px); letter-spacing:.01em; color:#fff; padding-top:6px;}
-  .center{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:34px; padding:40px 0;}
-  .title-block{max-width:960px;}
-  .title{font-family:var(--serif); font-weight:600; font-size:clamp(28px,4.4vw,58px); line-height:1.08; letter-spacing:.01em; text-transform:uppercase; color:#fff; margin:0;}
-  .subtitle{font-family:var(--serif); font-weight:500; font-size:clamp(20px,3.1vw,42px); line-height:1.12; letter-spacing:.02em; text-transform:uppercase; color:var(--blue-soft); margin-top:10px;}
-  .gate{display:flex; flex-direction:column; align-items:center; gap:18px; min-height:96px; justify-content:flex-start;}
-  .access-btn{font-family:var(--sans); font-weight:600; font-size:14px; letter-spacing:.18em; text-transform:uppercase; color:var(--navy-2); background:#fff; border:1px solid #fff; border-radius:100px; padding:16px 52px; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease; box-shadow:0 6px 22px rgba(0,0,0,.28);}
-  .access-btn:hover{transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.36);}
-  .access-btn:active{transform:translateY(0);}
-  .pw:not([hidden]){display:flex; align-items:stretch; gap:10px; animation:fade .28s ease;}
-  @keyframes fade{from{opacity:0; transform:translateY(6px);}to{opacity:1; transform:none;}}
-  .pw input{font-family:var(--sans); font-size:14px; color:#fff; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.34); border-radius:100px; padding:15px 24px; width:min(74vw,300px); outline:none; transition:border-color .16s ease, background .16s ease;}
-  .pw input::placeholder{color:rgba(255,255,255,0.5); letter-spacing:.04em;}
-  .pw input:focus{border-color:var(--blue-soft); background:rgba(255,255,255,0.1);}
-  .pw .go{font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--navy-2); background:#fff; border:1px solid #fff; border-radius:100px; padding:0 26px; cursor:pointer; white-space:nowrap; transition:transform .16s ease;}
-  .pw .go:hover{transform:translateY(-2px);}
-  .err{min-height:18px; font-size:12.5px; letter-spacing:.02em; color:#F3A9A0; font-weight:500;}
-  .foot{text-align:center; display:flex; flex-direction:column; gap:14px; padding-bottom:6px;}
-  .tag{font-family:var(--sans); font-weight:500; font-size:clamp(12px,1.4vw,15px); letter-spacing:.34em; text-transform:uppercase; color:var(--blue-soft);}
-  .contact{font-family:var(--sans); font-size:13px; letter-spacing:.02em; color:rgba(255,255,255,0.82); font-variant-numeric:tabular-nums;}
-  @media(max-width:560px){.watermark{font-size:26vh; opacity:.85;} .contact{font-size:11.5px;} .pw{flex-direction:column; align-items:center;} .pw .go{padding:13px 26px;}}
 </style>
 </head>
 <body>
-  <div class="frame">
-    <div class="watermark" aria-hidden="true"><span>A</span><span>G</span><span>M</span></div>
-    <header class="topline">AGM Real Estate Group, LLC</header>
-    <main class="center">
-      <div class="title-block">
-        <h1 class="title">Proposal for Management Services</h1>
-        <div class="subtitle">${PROPERTY_NAME}</div>
-      </div>
-      <form class="gate" id="gate" method="POST" action="/__access" autocomplete="off">
-        <button type="button" class="access-btn" id="accessBtn">Access</button>
-        <div class="pw" id="pwWrap" hidden>
-          <input type="password" name="password" id="pw" placeholder="Enter password" autocomplete="current-password" aria-label="Password" required />
-          <button type="submit" class="go">Enter&nbsp;&rarr;</button>
+  <div class="sheet">
+    <header class="head">
+      <span class="eyebrow">Confidential Proposal</span>
+      <span class="logo">
+        <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M5 28 16 4l11 24h-5.4l-5.6-12.6L10.4 28z"/><path fill="currentColor" d="M12.6 22h6.8l1.8 4H10.8z"/></svg>
+        <span class="lk"><span class="lk-word">AGM</span><span class="lk-sub">Real Estate Group</span></span>
+      </span>
+    </header>
+
+    <div class="body">
+      <section class="col left">
+        <p class="kicker">Private &middot; By Invitation Only</p>
+        <h1 class="title">Proposal for Management&nbsp;Services</h1>
+        <p class="lead">A tailored proposal for the professional management of your association &mdash; covering governance and Board support, financial and fiduciary oversight, facilities and capital planning, technology, and fees. Prepared exclusively for the intended recipient.</p>
+        <div class="inside">
+          <div class="in-label">Inside this proposal</div>
+          <ul>
+            <li>About AGM</li>
+            <li>Governance &amp; Board Support</li>
+            <li>Protecting the Association</li>
+            <li>Financial Management</li>
+            <li>Facilities &amp; Capital Projects</li>
+            <li>Tools, Technology &amp; Fees</li>
+          </ul>
         </div>
-        <div class="err" role="alert" id="err">${err}</div>
-      </form>
-    </main>
+      </section>
+
+      <section class="col right">
+        <form class="login" id="gate" method="POST" action="/__access" autocomplete="off">
+          <p class="l-kicker">Restricted Access</p>
+          <h2>View the proposal</h2>
+          <p class="help">This document is private. Enter the password provided with your invitation to continue.</p>
+          <div class="field">
+            <label for="pw">Password</label>
+            <input type="password" name="password" id="pw" placeholder="Enter password" autocomplete="current-password" required />
+          </div>
+          <button type="submit" class="btn">Access Proposal</button>
+          <div class="err" role="alert" id="err">${err}</div>
+          <div class="assist">Need the password? Contact AGM at <a href="tel:+12066228600">206.622.8600</a>.</div>
+        </form>
+      </section>
+    </div>
+
     <footer class="foot">
-      <div class="tag">Driving Market Prowess</div>
-      <div class="contact">206.&nbsp;622.&nbsp;8600 &nbsp;|&nbsp; agmrealestategroup.com &nbsp;|&nbsp; 12330 Northup Way, Bellevue, WA 98005</div>
+      <span class="contact">206.622.8600 &nbsp;&middot;&nbsp; agmrealestategroup.com &nbsp;&middot;&nbsp; 12330 Northup Way, Bellevue, WA 98005</span>
+      <span class="conf">Not for distribution</span>
     </footer>
   </div>
-  <noscript><style>#pwWrap{display:flex !important;} #accessBtn{display:none;}</style></noscript>
   <script>
     (function(){
-      var btn=document.getElementById('accessBtn'), wrap=document.getElementById('pwWrap'), input=document.getElementById('pw');
-      function reveal(){ wrap.hidden=false; btn.style.display='none'; if(input) input.focus(); }
-      if(btn) btn.addEventListener('click', reveal);
-      if(document.getElementById('err').textContent.trim()) reveal();
+      var input=document.getElementById('pw'), err=document.getElementById('err');
+      if(input && err && err.textContent.trim()){ input.focus(); }
     })();
   </script>
 </body>

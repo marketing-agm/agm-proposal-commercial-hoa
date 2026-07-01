@@ -30,11 +30,12 @@ Open `index.html` in a browser. That's it. Deep-link a section with the URL hash
 3. Every push to `main` auto-deploys production; every branch/PR gets its own preview URL.
 
 ## Access gate — custom password screen (Pages Functions)
-The site is protected by a **custom-designed cover / login screen** (navy AGM cover with an
-**Access** button → password prompt), served by a Cloudflare Pages Function
-(`functions/_middleware.js`). This runs **server-side**: until the correct password is submitted, the
-visitor only ever receives the cover page — the actual proposal (`index.html`) is never sent to the
-browser. The password lives only as an encrypted Cloudflare secret, never in the code or the client.
+The site is protected by a **custom-designed cover / login screen** (a minimal, institutional
+white split layout — explanatory copy on the left, password panel on the right, AGM logo top-right),
+served by a Cloudflare Pages Function (`functions/_middleware.js`). This runs **server-side**: until
+the correct password is submitted, the visitor only ever receives the cover page — the actual
+proposal (`index.html`) is never sent to the browser. The password lives only as an encrypted
+Cloudflare secret, never in the code or the client.
 
 This replaces the standard Zero Trust login screen with AGM's own branded page.
 
@@ -53,8 +54,8 @@ both of these for **Production _and_ Preview**, then redeploy:
 - **Force everyone to re-enter** by rotating `GATE_SECRET` (or bumping `TOKEN_VERSION` in the
   middleware).
 - Sessions last 7 days (`MAX_AGE`); `/__logout` clears the cookie.
-- The property/association name on the cover is the `PROPERTY_NAME` constant at the top of
-  `functions/_middleware.js`.
+- The cover screen's copy (title, description, "Inside this proposal" list, contact line) lives in the
+  `coverHTML()` function at the bottom of `functions/_middleware.js`.
 
 ### Local preview
 Copy `.dev.vars.example` → `.dev.vars` (git-ignored), fill in the two values, and run
