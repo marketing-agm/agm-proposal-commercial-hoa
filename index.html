@@ -179,6 +179,7 @@ em{font-style:italic;}
 /* numbered cards for rhythm */
 .cell{counter-increment:cardnum;}
 .cell::after{content:counter(cardnum,decimal-leading-zero); position:absolute; top:34px; right:36px; font-family:var(--serif); font-weight:600; font-size:15px; color:var(--accent); opacity:.34; letter-spacing:.03em; font-variant-numeric:tabular-nums; pointer-events:none;}
+.cellgrid.no-num .cell::after{content:none;}
 @media(max-width:820px){.cellgrid{grid-template-columns:1fr;} .cell:nth-child(odd){border-right:none;}}
 .cell{position:relative; padding:38px 44px 42px; border-bottom:1px solid var(--line-soft); transition:background .18s var(--ease);}
 .cell:nth-child(odd){border-right:1px solid var(--line-soft);}
@@ -303,7 +304,7 @@ em{font-style:italic;}
 .sf-contact{font-size:12.5px; color:var(--ink-72); font-variant-numeric:tabular-nums;}
 .sf-contact a{color:var(--accent);}
 .sf-contact a:hover{color:var(--accent-hover);}
-.sf-confidential{font-size:11px; font-weight:700; letter-spacing:.03em; color:var(--ink-42);}
+.sf-confidential{font-size:12.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--ink-42);}
 @media(max-width:760px){.site-footer{padding:40px 24px;} .sf-inner{flex-direction:column; align-items:flex-start; gap:22px;} .sf-meta{text-align:left;}}
 
 /* custom slim scrollbar */
@@ -519,11 +520,11 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
         </div>
 
         <div class="sec-head reveal" style="margin-top:48px;"><h3>Supporting Team</h3><span class="pipe">|</span><span class="kick">Specialized Roles</span></div>
-        <div class="cellgrid reveal">
+        <div class="cellgrid reveal no-num">
           <div class="cell"><div class="role-title">Property Operations Associate</div><div class="cell-desc">Assists in day-to-day operations</div></div>
           <div class="cell"><div class="role-title">Property Accountant</div><div class="cell-desc">Property-level accounting and financial reporting</div></div>
-          <div class="cell"><div class="role-title">Project Manager · Construction <em>As Applicable</em></div><div class="cell-desc">Leads capital projects with a focus on cost control, quality execution, and long-term asset performance</div></div>
-          <div class="cell"><div class="role-title">Maintenance Technician</div><div class="cell-desc">Preventive maintenance and emergency response</div></div>
+          <div class="cell"><div class="role-title">Project Manager · Construction</div><div class="cell-desc">Leads capital projects with a focus on cost control, quality execution, and long-term asset performance, as applicable</div></div>
+          <div class="cell"><div class="role-title">Maintenance Technician</div><div class="cell-desc">Preventive maintenance and emergency response, as applicable</div></div>
         </div>
       </div>
 
