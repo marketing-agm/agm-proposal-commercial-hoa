@@ -94,11 +94,9 @@ em{font-style:italic;}
 .topbar{position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 88%, transparent); backdrop-filter:saturate(140%) blur(10px); border-bottom:1px solid var(--line-soft);}
 .topbar-inner{display:flex; align-items:center; gap:22px; min-height:var(--hdr); padding:10px 24px;}
 .nav-links{display:flex; flex:1; align-items:center; gap:6px;}
-.nav-spacer{flex:0 0 var(--rail-w);}
 .nav-tabs{flex:1; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px;}
-.nav-right{display:flex; align-items:center; gap:16px; flex:0 0 auto;}
-.topbar-prop{font-size:9px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-42); white-space:nowrap;}
-@media(max-width:1400px){.nav-spacer{flex-basis:36px;} .topbar-prop{display:none;}}
+.nav-right{display:flex; align-items:center; gap:8px; flex:0 0 auto;}
+.topbar-prop{flex:0 0 calc(var(--rail-w) - 24px); min-width:0; font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-42); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .nav-link{position:relative; font-size:12px; font-weight:500; color:var(--ink-42); padding:8px 11px; border-radius:var(--radius-sm); cursor:pointer; background:none; border:none; font-family:var(--sans); letter-spacing:.01em; transition:color .15s var(--ease); white-space:nowrap;}
 .nav-link::after{content:""; position:absolute; left:11px; right:11px; bottom:1px; height:2px; border-radius:2px; background:var(--accent); transform:scaleX(0); transition:transform .22s var(--ease), background .15s var(--ease);}
 .nav-link:hover{color:var(--ink);}
@@ -350,7 +348,7 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
   .nav-links{position:fixed; inset:var(--hdr) 0 auto 0; flex-direction:column; align-items:stretch; gap:4px; background:var(--bg); border-bottom:1px solid var(--line); padding:14px 20px 20px; transform:translateY(-130%); transition:transform .22s var(--ease); max-height:calc(100vh - var(--hdr)); overflow:auto; z-index:90;}
   .nav-links.open{transform:translateY(0);}
   .nav-tabs,.nav-right{flex-direction:column; align-items:stretch; width:100%; gap:2px; flex:none;}
-  .nav-spacer{display:none;}
+  .topbar-prop{flex:1 1 auto;}
   .nav-link{text-align:left; padding:12px;}
   .hamburger{display:block; margin-left:auto;}
 }
@@ -400,9 +398,9 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
 <!-- ===================== TOP BAR ===================== -->
 <header class="topbar">
   <div class="topbar-inner">
+    <span class="topbar-prop">Meridian Campus Commercial Owners Association</span>
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">☰</button>
     <nav class="nav-links" id="navlinks" aria-label="Primary">
-      <div class="nav-spacer" aria-hidden="true"></div>
       <div class="nav-tabs">
         <button class="nav-link" data-route="about">About</button>
         <button class="nav-link" data-route="management">Management</button>
@@ -413,7 +411,6 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
         <button class="nav-link" data-route="fees">Fees</button>
       </div>
       <div class="nav-right">
-        <span class="topbar-prop">Meridian Campus Commercial Owners Association</span>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle light / dark">◐</button>
       </div>
     </nav>
