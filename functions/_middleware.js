@@ -203,7 +203,7 @@ ${ph}
   :root{
     --ink:#0A2540; --ink-70:rgba(10,37,64,0.70); --ink-55:rgba(10,37,64,0.55);
     --ink-40:rgba(10,37,64,0.40); --line:#E6EAEF; --line-strong:#D6DCE4;
-    --accent:#3A8DDE; --bg:#FAFBFC; --sheet:#FFFFFF;
+    --accent:#3A8DDE; --accent-2:#3DA6F1; --bg:#FAFBFC; --sheet:#FFFFFF;
     --serif:'Playfair Display', Georgia, 'Times New Roman', serif;
     --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
@@ -218,9 +218,10 @@ ${ph}
   .body{display:grid; grid-template-columns:1.32fr 1fr; min-height:0;}
   .col{padding:clamp(40px,5vw,84px) clamp(28px,4vw,64px);}
   .col.left{display:flex; flex-direction:column; justify-content:center;}
-  .col.right{border-left:1px solid var(--line); display:flex; flex-direction:column; justify-content:center; background:linear-gradient(180deg, rgba(58,141,222,0.018), transparent 40%);}
+  .col.right{display:flex; flex-direction:column; justify-content:center; background:var(--accent-2); color:#fff;}
   .kicker{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin:0 0 22px;}
-  .title{font-family:var(--serif); font-weight:600; font-size:clamp(30px,3.7vw,50px); line-height:1.1; letter-spacing:-.01em; color:var(--ink); margin:0 0 26px;}
+  .title{font-family:var(--serif); font-weight:600; font-size:clamp(30px,3.7vw,50px); line-height:1.1; letter-spacing:-.01em; color:var(--ink); margin:0 0 10px;}
+  .prop-name{font-family:var(--serif); font-weight:500; font-size:clamp(19px,2.4vw,30px); line-height:1.18; letter-spacing:-.01em; color:var(--accent-2); margin:0 0 26px;}
   .lead{font-size:15.5px; line-height:1.72; color:var(--ink-70); margin:0; max-width:38ch;}
   .inside{margin-top:40px; padding-top:26px; border-top:1px solid var(--line);}
   .inside .in-label{font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-40); margin-bottom:16px;}
@@ -228,27 +229,26 @@ ${ph}
   .inside li{font-size:13px; color:var(--ink-70); display:flex; align-items:baseline; gap:10px; line-height:1.35;}
   .inside li::before{content:""; flex:0 0 auto; width:5px; height:5px; border-radius:50%; background:var(--accent); transform:translateY(-1px);}
   .login{max-width:340px; width:100%;}
-  .login .l-kicker{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;}
-  .login h2{font-family:var(--serif); font-weight:600; font-size:24px; line-height:1.2; color:var(--ink); margin:0 0 14px;}
-  .login p.help{font-size:13.5px; line-height:1.65; color:var(--ink-55); margin:0 0 28px;}
+  .login p.help{font-size:13.5px; line-height:1.65; color:rgba(255,255,255,0.92); margin:0 0 28px;}
   .field{margin-bottom:14px;}
-  .field label{display:block; font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-55); margin-bottom:9px;}
-  .field input{width:100%; font-family:var(--sans); font-size:14.5px; color:var(--ink); background:#fff; border:1px solid var(--line-strong); border-radius:6px; padding:14px 16px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;}
+  .field label{display:block; font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.9); margin-bottom:9px;}
+  .field input{width:100%; font-family:var(--sans); font-size:14.5px; color:var(--ink); background:#fff; border:1px solid rgba(255,255,255,0.55); border-radius:6px; padding:14px 16px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;}
   .field input::placeholder{color:var(--ink-40);}
-  .field input:focus{border-color:var(--accent); box-shadow:0 0 0 3px rgba(58,141,222,0.12);}
-  .btn{width:100%; font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--ink); border:1px solid var(--ink); border-radius:6px; padding:15px 20px; cursor:pointer; transition:background .16s ease, transform .12s ease;}
-  .btn:hover{background:#0d2f52; transform:translateY(-1px);}
+  .field input:focus{border-color:#fff; box-shadow:0 0 0 3px rgba(255,255,255,0.35);}
+  .btn{width:100%; font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); background:#fff; border:1px solid #fff; border-radius:6px; padding:15px 20px; cursor:pointer; transition:background .16s ease, transform .12s ease, box-shadow .16s ease;}
+  .btn:hover{background:#fff; transform:translateY(-1px); box-shadow:0 8px 22px rgba(10,37,64,0.22);}
   .btn:active{transform:translateY(0);}
-  .err{min-height:18px; margin-top:12px; font-size:12.5px; color:#C0392B; font-weight:500;}
-  .login .assist{margin-top:26px; padding-top:20px; border-top:1px solid var(--line); font-size:12px; line-height:1.6; color:var(--ink-40);}
-  .login .assist a{color:var(--ink-55); text-decoration:none;}
-  .login .assist a:hover{color:var(--accent);}
+  .err{min-height:0; margin-top:12px; font-size:12.5px; color:#fff; font-weight:600;}
+  .err:not(:empty){display:inline-block; background:rgba(10,37,64,0.30); border:1px solid rgba(255,255,255,0.45); padding:8px 13px; border-radius:6px;}
+  .login .assist{margin-top:26px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.28); font-size:12px; line-height:1.6; color:rgba(255,255,255,0.75);}
+  .login .assist a{color:#fff; text-decoration:none; font-weight:600;}
+  .login .assist a:hover{text-decoration:underline;}
   .foot{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; padding:clamp(16px,1.8vw,24px) clamp(26px,3.6vw,56px); border-top:1px solid var(--line);}
   .foot .contact{font-size:12px; color:var(--ink-55); font-variant-numeric:tabular-nums;}
   .foot .conf{font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-40);}
   @media(max-width:860px){
     .body{grid-template-columns:1fr;}
-    .col.right{border-left:none; border-top:1px solid var(--line); background:none;}
+    .col.right{border-top:1px solid rgba(255,255,255,0.25);}
     .col{padding:clamp(34px,7vw,56px) clamp(26px,7vw,48px);}
     .login{max-width:none;}
   }
@@ -261,7 +261,7 @@ ${ph}
 <body>
   <div class="sheet">
     <header class="head">
-      <span class="eyebrow">Confidential Proposal</span>
+      <span class="eyebrow">AGM Real Estate Group, LLC</span>
       <span class="logo">
         <img src="/assets/agm-logo-black.svg" alt="AGM Real Estate Group" />
       </span>
@@ -269,8 +269,8 @@ ${ph}
 
     <div class="body">
       <section class="col left">
-        <p class="kicker">Private &middot; By Invitation Only</p>
         <h1 class="title">Proposal for Management&nbsp;Services</h1>
+        <div class="prop-name">Meridian Campus Commercial Owners Association</div>
         <p class="lead">A tailored proposal for the professional management of your association &mdash; covering governance and Board support, financial and fiduciary oversight, facilities and capital planning, technology, and fees. Prepared exclusively for the intended recipient.</p>
         <div class="inside">
           <div class="in-label">Inside this proposal</div>
@@ -287,8 +287,6 @@ ${ph}
 
       <section class="col right">
         <form class="login" id="gate" method="POST" action="/__access" autocomplete="off">
-          <p class="l-kicker">Restricted Access</p>
-          <h2>View the proposal</h2>
           <p class="help">This document is private. Enter the password provided with your invitation to continue.</p>
           <div class="field">
             <label for="pw">Password</label>
