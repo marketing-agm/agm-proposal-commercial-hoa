@@ -244,8 +244,8 @@ ${ph}
   .login .assist a{color:#fff; text-decoration:none; font-weight:600;}
   .login .assist a:hover{text-decoration:underline;}
   .foot{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; padding:clamp(16px,1.8vw,24px) clamp(26px,3.6vw,56px); border-top:1px solid var(--line);}
-  .foot .contact{font-size:12px; color:var(--ink-55); font-variant-numeric:tabular-nums;}
-  .foot .conf{font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-40);}
+  .foot .contact{font-size:12px; color:var(--accent); font-variant-numeric:tabular-nums;}
+  .foot .conf{font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent);}
   @media(max-width:860px){
     .body{grid-template-columns:1fr;}
     .col.right{border-top:1px solid rgba(255,255,255,0.25);}
