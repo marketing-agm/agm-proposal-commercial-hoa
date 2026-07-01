@@ -126,6 +126,10 @@ export async function onRequest(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
 
+  // Public assets (logos, favicons, etc.) are served without authentication,
+  // so the cover/login page can display them before sign-in.
+  if (url.pathname.startsWith("/assets/")) return next();
+
   // Fail closed if the operator hasn't configured a password yet.
   if (!env.SITE_PASSWORD) {
     return new Response(
@@ -209,11 +213,8 @@ ${ph}
   .sheet{background:var(--sheet); border:1px solid var(--line-strong); border-radius:2px; min-height:calc(100vh - clamp(32px,4.8vw,68px)); display:grid; grid-template-rows:auto 1fr auto; box-shadow:0 1px 2px rgba(10,37,64,.03), 0 18px 50px rgba(10,37,64,.05);}
   .head{display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,2.3vw,30px) clamp(26px,3.6vw,56px); border-bottom:1px solid var(--line);}
   .head .eyebrow{font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-55);}
-  .logo{display:flex; align-items:center; gap:12px;}
-  .logo svg{display:block; color:var(--accent); flex:0 0 auto;}
-  .logo .lk{display:flex; flex-direction:column; gap:3px; line-height:1;}
-  .logo .lk-word{font-family:var(--serif); font-weight:700; font-size:16px; letter-spacing:.05em; color:var(--ink);}
-  .logo .lk-sub{font-size:8.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-40);}
+  .logo{display:flex; align-items:center;}
+  .logo img{display:block; height:34px; width:auto;}
   .body{display:grid; grid-template-columns:1.32fr 1fr; min-height:0;}
   .col{padding:clamp(40px,5vw,84px) clamp(28px,4vw,64px);}
   .col.left{display:flex; flex-direction:column; justify-content:center;}
@@ -252,7 +253,7 @@ ${ph}
     .login{max-width:none;}
   }
   @media(max-width:520px){
-    .logo .lk{display:none;}
+    .logo img{height:28px;}
     .foot{flex-direction:column; align-items:flex-start; gap:8px;}
   }
 </style>
@@ -262,8 +263,7 @@ ${ph}
     <header class="head">
       <span class="eyebrow">Confidential Proposal</span>
       <span class="logo">
-        <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M5 28 16 4l11 24h-5.4l-5.6-12.6L10.4 28z"/><path fill="currentColor" d="M12.6 22h6.8l1.8 4H10.8z"/></svg>
-        <span class="lk"><span class="lk-word">AGM</span><span class="lk-sub">Real Estate Group</span></span>
+        <img src="/assets/agm-logo-black.svg" alt="AGM Real Estate Group" />
       </span>
     </header>
 

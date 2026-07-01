@@ -123,11 +123,8 @@ em{font-style:italic;}
 .rail-title{font-family:var(--serif); font-weight:600; font-size:34px; line-height:1.12; letter-spacing:-.01em; color:var(--on-navy); margin:0;}
 .rail-title .hl{color:var(--accent-2); display:block;}
 /* AGM logomark anchored at the foot of the navy block */
-.rail-mark{position:relative; z-index:1; margin-top:auto; padding-top:44px; display:flex; align-items:center; gap:13px;}
-.rail-mark svg{display:block; color:var(--accent-2); flex:0 0 auto;}
-.rail-mark .rm-txt{display:flex; flex-direction:column; gap:3px;}
-.rail-mark .rm-word{font-family:var(--serif); font-weight:700; font-size:18px; letter-spacing:.06em; color:#fff; line-height:1;}
-.rail-mark .rm-sub{font-size:9px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,0.55); line-height:1;}
+.rail-mark{position:relative; z-index:1; margin-top:auto; padding-top:44px; display:flex; align-items:center;}
+.rail-mark img{display:block; height:40px; width:auto;}
 .rail-blue{background:var(--accent-2); color:#fff; padding:50px 56px 34px; position:relative; overflow:hidden; display:flex; flex-direction:column; min-height:42%;}
 .rail-blue::after{content:""; position:absolute; right:-60px; top:-60px; width:240px; height:240px; border:1px solid rgba(255,255,255,0.14); border-radius:50%; pointer-events:none;}
 .rail-blue::before{content:""; position:absolute; right:-120px; bottom:-120px; width:300px; height:300px; border:1px solid rgba(255,255,255,0.10); border-radius:50%; pointer-events:none;}
@@ -292,8 +289,8 @@ em{font-style:italic;}
    ============================================================ */
 .site-footer{background:var(--navy); color:rgba(255,255,255,0.7); padding:50px 76px;}
 .sf-inner{max-width:var(--shell-w); margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:36px; flex-wrap:wrap;}
-.sf-brand{display:flex; align-items:center; gap:14px;}
-.sf-brand svg{color:var(--accent-2); flex:0 0 auto;}
+.sf-brand{display:flex; align-items:center; gap:16px;}
+.sf-brand .sf-logo{display:block; height:34px; width:auto; flex:0 0 auto;}
 .sf-id{display:flex; flex-direction:column; gap:5px;}
 .sf-wordrow{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;}
 .sf-word{font-family:var(--serif); font-weight:700; font-size:18px; color:#fff; letter-spacing:.04em; line-height:1;}
@@ -755,8 +752,8 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
 <footer class="site-footer">
   <div class="sf-inner">
     <div class="sf-brand">
-      <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M5 28 16 4l11 24h-5.4l-5.6-12.6L10.4 28z"/><path fill="currentColor" d="M12.6 22h6.8l1.8 4H10.8z"/></svg>
-      <span class="sf-id"><span class="sf-wordrow"><span class="sf-word">AGM Real Estate Group</span><span class="sf-mf">Commercial · HOA</span></span><span class="sf-tag">Asset · Growth · Management</span></span>
+      <img class="sf-logo" src="/assets/agm-logo-white.svg" alt="AGM Real Estate Group" />
+      <span class="sf-mf">Commercial · HOA</span>
     </div>
     <div class="sf-meta">
       <div class="sf-contact"><a href="https://www.agmrealestategroup.com">agmrealestategroup.com</a> &middot; 206.622.8600 &middot; 12330 Northup Way, Bellevue, WA 98005</div>
@@ -799,10 +796,6 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
 
   function esc2(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
 
-  var LOGOMARK = '<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">'+
-    '<path fill="currentColor" d="M5 28 16 4l11 24h-5.4l-5.6-12.6L10.4 28z"/>'+
-    '<path fill="currentColor" d="M12.6 22h6.8l1.8 4H10.8z"/></svg>';
-
   // thin-line section icons, keyed by nav section
   var ICONS = {
     about:'<rect x="4.5" y="3.5" width="15" height="17"/><path d="M9 20.5v-4h6v4"/><path d="M8 7.5h2.5M13.5 7.5H16M8 11.5h2.5M13.5 11.5H16"/>',
@@ -837,9 +830,7 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
           '<p class="rail-eyebrow">'+esc(p.eyebrow)+'</p>'+
           '<h1 class="rail-title">'+titleHTML+'</h1>'+
         '</div>'+
-        '<div class="rail-mark">'+LOGOMARK+
-          '<span class="rm-txt"><span class="rm-word">AGM</span><span class="rm-sub">Real Estate Group</span></span>'+
-        '</div>'+
+        '<div class="rail-mark"><img src="/assets/agm-logo-white.svg" alt="AGM Real Estate Group" /></div>'+
       '</div>'+
       '<div class="rail-blue">'+
         leadHTML+
