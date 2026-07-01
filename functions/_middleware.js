@@ -218,7 +218,7 @@ ${ph}
   .body{display:grid; grid-template-columns:1.32fr 1fr; min-height:0;}
   .col{padding:clamp(40px,5vw,84px) clamp(28px,4vw,64px);}
   .col.left{display:flex; flex-direction:column; justify-content:center;}
-  .col.right{display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:var(--accent-2); color:#fff;}
+  .col.right{display:flex; flex-direction:column; justify-content:center; align-items:center; background:var(--accent-2); color:#fff;}
   .kicker{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin:0 0 22px;}
   .title{font-family:var(--serif); font-weight:600; font-size:clamp(30px,3.7vw,50px); line-height:1.1; letter-spacing:-.01em; color:var(--ink); margin:0 0 10px;}
   .prop-name{font-family:var(--serif); font-weight:500; font-size:clamp(19px,2.4vw,30px); line-height:1.18; letter-spacing:-.01em; color:var(--accent-2); margin:0 0 26px;}
@@ -232,7 +232,7 @@ ${ph}
   .login p.help{font-size:13.5px; line-height:1.65; color:rgba(255,255,255,0.92); margin:0 0 28px;}
   .field{margin-bottom:14px;}
   .field label{display:block; font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.9); margin-bottom:9px;}
-  .field input{width:100%; font-family:var(--sans); font-size:14.5px; text-align:center; color:var(--ink); background:#fff; border:1px solid rgba(255,255,255,0.55); border-radius:6px; padding:14px 16px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;}
+  .field input{width:100%; font-family:var(--sans); font-size:14.5px; color:var(--ink); background:#fff; border:1px solid rgba(255,255,255,0.55); border-radius:6px; padding:14px 16px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;}
   .field input::placeholder{color:var(--ink-40);}
   .field input:focus{border-color:#fff; box-shadow:0 0 0 3px rgba(255,255,255,0.35);}
   .btn{width:100%; font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); background:#fff; border:1px solid #fff; border-radius:6px; padding:15px 20px; cursor:pointer; transition:background .16s ease, transform .12s ease, box-shadow .16s ease;}
