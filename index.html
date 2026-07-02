@@ -129,10 +129,13 @@ em{font-style:italic;}
 .rail-stick{position:sticky; top:var(--hdr); height:calc(100vh - var(--hdr)); overflow:auto; display:flex; flex-direction:column;}
 .rail-navy{position:relative; background:linear-gradient(165deg, var(--navy-soft) 0%, var(--navy) 62%); color:var(--on-navy); padding:78px 56px 56px; overflow:hidden; flex:1 1 auto; min-height:54%; display:flex; flex-direction:column;}
 .rail-navy-top{position:relative; z-index:1;}
-/* large faded "AGM" wordmark running sideways down the navy rail,
-   set in Linotype Didot — spans most of the panel, sits behind copy */
-.rail-watermark{position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; display:flex; align-items:center; justify-content:center;}
-.rail-watermark span{font-family:'AGM Didot', var(--serif); font-weight:400; font-size:clamp(180px, 27vh, 320px); line-height:1; letter-spacing:.06em; color:rgba(255,255,255,0.06); white-space:nowrap; transform:rotate(90deg); transform-origin:center; -webkit-user-select:none; user-select:none;}
+/* large faded "AGM" wordmark set sideways in Linotype Didot — spans the
+   FULL height of the rail (navy + blue), anchored to the left edge so the
+   letters read A→G→M top-to-bottom with their bases bleeding off the left.
+   Rendered as the rail's last child (z-index:0) so it paints above both
+   panel backgrounds but below all copy (which is z-index:1). */
+.rail-watermark{position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; display:flex; align-items:center; justify-content:flex-start;}
+.rail-watermark span{writing-mode:vertical-lr; text-orientation:mixed; font-family:'AGM Didot', var(--serif); font-weight:400; font-size:clamp(300px, 44vh, 560px); line-height:.82; letter-spacing:.02em; color:rgba(255,255,255,0.10); margin-left:-.18em; -webkit-user-select:none; user-select:none;}
 .rail-icon{display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.05); color:var(--accent-2); margin-bottom:28px;}
 .rail-icon svg{width:25px; height:25px;}
 .rail-eyebrow{font-size:11px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--accent-2); margin:0 0 24px;}
@@ -360,9 +363,9 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
 @media(max-width:960px){
   .shell{grid-template-columns:1fr;}
   .rail{border-right:none; border-bottom:1px solid var(--line);}
-  .rail-stick{position:static; max-height:none; overflow:visible; flex-direction:row; flex-wrap:wrap;}
+  .rail-stick{position:relative; height:auto; max-height:none; overflow:hidden; flex-direction:row; flex-wrap:wrap;}
   .rail-navy{min-height:180px; flex:1 1 60%; padding:44px 34px;}
-  .rail-watermark span{font-size:clamp(120px, 34vw, 150px);}
+  .rail-watermark span{font-size:clamp(180px, 52vw, 300px);}
   .rail-blue{min-height:0; flex:1 1 100%; padding:32px 34px;}
   .content{padding:48px 30px 70px;}
   .nav-links{position:fixed; inset:var(--hdr) 0 auto 0; flex-direction:column; align-items:stretch; gap:4px; background:var(--bg); border-bottom:1px solid var(--line); padding:14px 20px 20px; transform:translateY(-130%); transition:transform .22s var(--ease); max-height:calc(100vh - var(--hdr)); overflow:auto; z-index:90;}
@@ -800,7 +803,6 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
     var pad = function(x){ return (x<10?"0":"")+x; };
     rail.innerHTML =
       '<div class="rail-navy">'+
-        '<div class="rail-watermark" aria-hidden="true"><span>AGM</span></div>'+
         '<div class="rail-navy-top">'+
           '<h1 class="rail-title">'+titleHTML+'</h1>'+
         '</div>'+
@@ -812,7 +814,8 @@ html{scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;}
           '<div class="rail-ticker">'+segs+'</div>'+
           '<div class="rail-num">'+pad(i)+' / '+pad(n)+'</div>'+
         '</div>'+
-      '</div>';
+      '</div>'+
+      '<div class="rail-watermark" aria-hidden="true"><span>AGM</span></div>';
   }
 
   var revObserver = ("IntersectionObserver" in window) ? new IntersectionObserver(function(entries){
