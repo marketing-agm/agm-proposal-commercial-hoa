@@ -64,7 +64,7 @@ function htmlHeaders(extra) {
     "Content-Type": "text/html; charset=utf-8",
     "Cache-Control": "no-store, must-revalidate",
     "X-Robots-Tag": "noindex, nofollow, noarchive",
-    "X-Frame-Options": "DENY",
+    "Content-Security-Policy": "frame-ancestors *",
     "X-Content-Type-Options": "nosniff",
     "Referrer-Policy": "no-referrer"
   }, extra || {});
@@ -144,7 +144,7 @@ export async function onRequest(context) {
   // Log out.
   if (url.pathname === "/__logout") {
     const headers = new Headers({ Location: "/" });
-    headers.append("Set-Cookie", `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`);
+    headers.append("Set-Cookie", `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=0`);
     return new Response(null, { status: 303, headers });
   }
 
@@ -157,7 +157,7 @@ export async function onRequest(context) {
       const headers = new Headers({ Location: "/" });
       headers.append(
         "Set-Cookie",
-        `${COOKIE}=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${MAX_AGE}`
+        `${COOKIE}=${token}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${MAX_AGE}`
       );
       return new Response(null, { status: 303, headers });  // → home, now authenticated
     }
