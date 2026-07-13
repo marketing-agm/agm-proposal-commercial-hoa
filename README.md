@@ -94,8 +94,9 @@ What it tracks once the key is set:
 - **Everything, both pages** — `autocapture` (every click/interaction), **session replays**, and
   click/scroll **heatmaps** are enabled.
 
-All events are tagged with `proposal: commercial-hoa-microsite` (and `surface: gate` on the cover
-page) so you can filter gate traffic from in-proposal activity.
+All events are tagged with `proposal: meridian-microsite` (and `surface: gate` on the cover
+page) so you can filter gate traffic from in-proposal activity — and tell Meridian apart from
+AGM's other proposal micro-sites that report into the same PostHog project.
 
 ## Operational notes
 - `_headers` enforces `noindex` and security headers at the edge.

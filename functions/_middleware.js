@@ -100,7 +100,7 @@ function posthogSnippet(key, host, surface) {
     disable_session_recording: false,
     session_recording: { maskAllInputs: true }
   });
-  posthog.register({ proposal: 'commercial-hoa-microsite', surface: '${s}' });
+  posthog.register({ proposal: 'meridian-microsite', surface: '${s}' });
   posthog.capture('gate_viewed');
 </script>`;
 }
